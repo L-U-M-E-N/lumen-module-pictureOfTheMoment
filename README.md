@@ -1,0 +1,1 @@
+lumen-module-pictureOfTheMoment
