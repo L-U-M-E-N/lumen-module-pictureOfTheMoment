@@ -1,9 +1,10 @@
-const remote = require('electron').remote;
-const picList = remote.getGlobal('pictureList');
+let picList;
 let timeoutDelay = -1;
 
 class Pictures {
 	static init() {
+		picList = remote.getGlobal('pictureList');
+
 		if(currentWindow === 'index') {
 			const imgDOM = document.getElementsByClassName('module-pictures')[0];
 
@@ -12,6 +13,8 @@ class Pictures {
 	}
 
 	static drawRandomImg(imgDOM) {
+		console.log('drawRandomImg', imgDOM);
+
 		const tmpList = [];
 		for(const i in picList) {
 			for(let j=0; j<picList[i].length; j++) {
