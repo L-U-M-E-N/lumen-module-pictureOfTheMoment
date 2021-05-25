@@ -23,7 +23,14 @@ class Pictures {
 		}
 
 		const elt = tmpList[Math.floor(tmpList.length * Math.random())];
-		imgDOM.innerHTML = '<img src="' + Pictures.normalizeFileName(elt) + '">';
+		while(imgDOM.firstChild) {
+			imgDOM.removeChild(imgDOM.firstChild);
+		}
+
+		const img = document.createElement('img');
+		imgDOM.appendChild(img);
+		img.src = Pictures.normalizeFileName(elt);
+		img.addEventListener('load', setupBlocks);
 
 		clearTimeout(timeoutDelay);
 		timeoutDelay = setTimeout(() => { Pictures.drawRandomImg(imgDOM); }, 15*60*1000);
