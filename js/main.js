@@ -13,8 +13,6 @@ class Pictures {
 	}
 
 	static drawRandomImg(imgDOM) {
-		console.log('drawRandomImg', imgDOM);
-
 		const tmpList = [];
 		for(const i in picList) {
 			for(let j=0; j<picList[i].length; j++) {
