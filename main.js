@@ -1,5 +1,5 @@
 // Get files
-global.pictureList = {};
+const pictureList = {};
 
 fileScanner('PATHTOFILE',/\.(png|jpg|jpeg|bmp|svg)$/,function(filename){
 	let dirName  = filename.split('\\');
@@ -8,4 +8,11 @@ fileScanner('PATHTOFILE',/\.(png|jpg|jpeg|bmp|svg)$/,function(filename){
 
 	if(pictureList[dirName] === undefined) { pictureList[dirName] = []; }
 	pictureList[dirName].push(picName);
+});
+
+const window = require('electron').BrowserWindow;
+ipcMain.on('pictureOfTheMoment-getList', () => {
+	for(const currWindow of window.getAllWindows()) {
+		currWindow.webContents.send('pictureOfTheMoment-list', pictureList);
+	}
 });

@@ -3,13 +3,17 @@ let timeoutDelay = -1;
 
 class Pictures {
 	static init() {
-		picList = remote.getGlobal('pictureList');
+		ipcRenderer.on('pictureOfTheMoment-list', (_, sentPicList) => {
+			picList = sentPicList;
 
-		if(currentWindow === 'index') {
-			const imgDOM = document.getElementsByClassName('module-pictures')[0];
+			if(currentWindow === 'index') {
+				const imgDOM = document.getElementsByClassName('module-pictures')[0];
 
-			Pictures.drawRandomImg(imgDOM);
-		}
+				Pictures.drawRandomImg(imgDOM);
+			}
+		});
+
+		ipcRenderer.send('pictureOfTheMoment-getList');
 	}
 
 	static drawRandomImg(imgDOM) {
