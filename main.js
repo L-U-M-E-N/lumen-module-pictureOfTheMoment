@@ -10,9 +10,6 @@ fileScanner('PATHTOFILE',/\.(png|jpg|jpeg|bmp|svg)$/,function(filename){
 	pictureList[dirName].push(picName);
 });
 
-const window = require('electron').BrowserWindow;
-ipcMain.on('pictureOfTheMoment-getList', () => {
-	for(const currWindow of window.getAllWindows()) {
-		currWindow.webContents.send('pictureOfTheMoment-list', pictureList);
-	}
+ipcMain.handle('pictureOfTheMoment-getList', () => {
+	return pictureList;
 });

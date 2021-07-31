@@ -2,18 +2,14 @@ let picList;
 let timeoutDelay = -1;
 
 class Pictures {
-	static init() {
-		ipcRenderer.on('pictureOfTheMoment-list', (_, sentPicList) => {
-			picList = sentPicList;
+	static async init() {
+		picList = await ipcRenderer.invoke('pictureOfTheMoment-getList');
 
-			if(currentWindow === 'index') {
-				const imgDOM = document.getElementsByClassName('module-pictures')[0];
+		if(currentWindow === 'index') {
+			const imgDOM = document.getElementsByClassName('module-pictures')[0];
 
-				Pictures.drawRandomImg(imgDOM);
-			}
-		});
-
-		ipcRenderer.send('pictureOfTheMoment-getList');
+			Pictures.drawRandomImg(imgDOM);
+		}
 	}
 
 	static drawRandomImg(imgDOM) {
