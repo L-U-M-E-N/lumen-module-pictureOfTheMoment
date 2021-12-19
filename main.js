@@ -5,11 +5,17 @@ ipcMain.handle('pictureOfTheMoment-getList', () => {
 	return pictureList;
 });
 
-fileScanner('PATHTOFILE',/\.(png|jpg|jpeg|bmp|svg)$/,function(filename){
-	let dirName  = filename.split('\\');
-	const picName  = dirName.pop();
-	dirName      = dirName.join('/');
+(async() => {
+	const directories = await ConfigManager.get('pictureOfTheMoment', 'directories');
 
-	if(pictureList[dirName] === undefined) { pictureList[dirName] = []; }
-	pictureList[dirName].push(picName);
-});
+	for(const directory of directories) {
+		fileScanner(directory,/\.(png|jpg|jpeg|bmp|svg)$/,function(filename){
+			let dirName  = filename.split('\\');
+			const picName  = dirName.pop();
+			dirName      = dirName.join('/');
+
+			if(pictureList[dirName] === undefined) { pictureList[dirName] = []; }
+			pictureList[dirName].push(picName);
+		});
+	}
+})(); // Delay, so you won't have this scan at exact load time
