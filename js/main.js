@@ -20,6 +20,10 @@ class Pictures {
 			}
 		}
 
+		if(tmpList.length === 0) {
+			return;
+		}
+
 		const elt = tmpList[Math.floor(tmpList.length * Math.random())];
 		while(imgDOM.firstChild) {
 			imgDOM.removeChild(imgDOM.firstChild);
